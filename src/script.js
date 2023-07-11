@@ -63,8 +63,8 @@ const position = geometry.attributes.position;
 const uvs = [];
 for (let i = 0; i < position.count; i++) {
   const v3 = new Vector3().fromBufferAttribute(position, i);
-  uvs.push((v3.x + offset.x) / range.x);
   uvs.push((v3.y + offset.y) / range.y);
+  uvs.push((v3.x + offset.x) / range.x);
 }
 
 geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
@@ -81,10 +81,11 @@ const images = [
 ]
 const texture = new THREE.TextureLoader().load(images[0]);
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+texture.center.set(0.5, 0.5);
 
 const material = new THREE.MeshBasicMaterial({
   map: texture,
-  color: new THREE.Color(0xFF0000),
+  color: new THREE.Color(0x00FF00),
   // wireframe: true,
 });
 const mesh = new THREE.Mesh(geometry, material);
@@ -119,7 +120,7 @@ controls.target.set(cen.x, cen.y, cen.z);
 const onAnimationFrameHandler = (timeStamp) => {
   renderer.render(scene, camera);
   if (texture) {
-    texture.offset.x += 0.005;
+    texture.offset.x += 0.002;
   }
   controls.update();
   window.requestAnimationFrame(onAnimationFrameHandler);
