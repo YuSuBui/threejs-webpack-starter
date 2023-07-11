@@ -62,10 +62,9 @@ export function toMesh(mesh) {
   const position = mesh.geometry.attributes.position;
   const vector = new THREE.Vector3();
   const division = 1 / 100;
-  const length = Math.round(position.array.length / 8)
-  for (let i = 0; i < length; i = i + 2) {
-    // vector.fromBufferAttribute(position, i);
-    // vector.applyMatrix4(mesh.matrixWorld);
+  for (let i = 0; i < position.count; i++) {
+    vector.fromBufferAttribute(position, i);
+    vector.applyMatrix4(mesh.matrixWorld);
 
     const updateX = vector.x * Math.cos(division) - vector.y * Math.sin(division);
     const updateY = vector.y * Math.cos(division) + vector.x * Math.sin(division);
